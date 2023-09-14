@@ -52,6 +52,20 @@ final class BullsEyeTests: XCTestCase {
 
     // then (그 다음) : 테스트가 실패하면 인쇄되는 메시지와 함께 예상한 결과를 주장하는 섹션입니다. 이 경우 sut.scoreRound는 100 - 5이므로 95와 같아야 합니다.
     XCTAssertEqual(sut.scoreRound, 95, "guess로 계산된 점수가 잘못되었습니다.")
-
   }
+  
+  // 성능 테스트
+  func testScoreIsComputedPerformance() {
+    measure(
+      metrics: [
+        XCTClockMetric(), // 경과 시간을 측정
+        XCTCPUMetric(),   // CPU 시간, 주기 및 명령어 수를 포함한 CPU 활동을 추적
+        XCTStorageMetric(), // 테스트된 코드가 스토리지에 쓰는 데이터의 양을 알려줌
+        XCTMemoryMetric() // 사용된 실제 메모리의 양을 추적
+      ]
+    ) {
+      sut.check(guess: 100)
+    }
+  }
+  
 }
